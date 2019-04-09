@@ -1,5 +1,4 @@
 <% include ../partials/header %>
-<div class="container">
     <div class="row">
         <div class="col-md-3">
             <p class="lead">Spielplätze LB</p>
@@ -8,6 +7,7 @@
                 <li class="list-group-item">Info 2</li>
                 <li class="list-group-item">Info 3</li>
             </div>
+            <div id="map"></div>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
@@ -50,6 +50,34 @@
             </div>
         </div>
     </div>
-</div>
+    
+    <script>
+      function initMap() {
+        var lat = <%= playground.lat %>;
+        var lng = <%= playground.lng %>;
+        var center = {lat: lat, lng: lng };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 8,
+            center: center,
+            scrollwheel: false
+        });
+        var contentString = `
+          <strong><%= playground.name %><br />
+          <%= playground.location %></strong>
+          <p><%= playground.description %></p>
+        `
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        var marker = new google.maps.Marker({
+            position: center,
+            map: map
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEB4zpOjQmMl2YTPJydHGhfUZbCGwDJ8o&callback=initMap"></script>
 
 <% include ../partials/footer %>
