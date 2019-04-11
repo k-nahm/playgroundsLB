@@ -57,14 +57,14 @@
         var lng = <%= playground.lng %>;
         var center = {lat: lat, lng: lng };
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 8,
+            zoom: 13,
             center: center,
-            scrollwheel: false
+            scrollwheel: true
         });
         var contentString = `
-          <strong><%= playground.name %><br />
-          <%= playground.location %></strong>
-          <p><%= playground.description %></p>
+        <strong><%= playground.location %></strong><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=<%= playground.lat %>,<%= playground.lng %>" target="_blank"><span>In Google Maps ansehen</span></a>
+        
         `
         var infowindow = new google.maps.InfoWindow({
           content: contentString
