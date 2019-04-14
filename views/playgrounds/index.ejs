@@ -3,9 +3,11 @@
          <div class="container">
              <h1>Welcome To Playground App!</h1>
              <p>View our playgrounds from LB</p>
-             <p>
-                <a class="btn btn-primary btn-large" href="/playgrounds/new">Spielplatz hinzufügen</a>
-             </p>
+             <% if(currentUser && currentUser.isAdmin){ %>
+                 <p>
+                    <a class="btn btn-primary btn-large" href="/playgrounds/new">Spielplatz hinzufügen</a>
+                 </p>
+             <% }%>
          </div>
      </header>
      

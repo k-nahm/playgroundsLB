@@ -27,7 +27,7 @@ router.get("/", function(req, res){
 });
 
 //CREATE - add new campground to DB
-router.post("/", middleware.isLoggedIn, function(req, res){
+router.post("/", middleware.isAdmin, function(req, res){
   // get data from form and add to playgrounds array
   var name = req.body.name;
   var image = req.body.image;
@@ -59,7 +59,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 });
 
 //NEW - show form to create new playground
-router.get("/new", middleware.isLoggedIn, function(req, res){
+router.get("/new", middleware.isAdmin, function(req, res){
    res.render("playgrounds/new.ejs"); 
 });
 
@@ -111,17 +111,6 @@ router.put("/:id", middleware.checkPlaygroundOwnership, function(req, res){
     });
   });
 });
-
-// DESTROY PLAYGROUND ROUTE
-// router.delete("/:id", function(req, res){
-//   Playground.findByIdAndRemove(req.params.id, function(err){
-//       if(err){
-//           res.redirect("/playgrounds");
-//       } else {
-//           res.redirect("/playgrounds");
-//       }
-//   });
-// });
 
 router.delete("/:id", middleware.checkPlaygroundOwnership, (req, res) => {
     Playground.findByIdAndRemove(req.params.id, (err, playgroundRemoved) => {

@@ -11,8 +11,8 @@ middlewareObj.checkPlaygroundOwnership = function(req, res, next) {
                req.flash("error", "Spielplatz nicht gefunden.");
                res.redirect("back");
            }  else {
-               // does user own the campground?
-            if(foundPlayground.author.id.equals(req.user._id)) {
+               // does user own the playground?
+            if(req.user.isAdmin) {
                 next();
             } else {
                 req.flash("error", "Du hast nicht die Rechte das zu tun.");
@@ -34,7 +34,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
                 res.redirect("back");
            } else {
                 // does user own the comment?
-                if(foundComment.author.id.equals(req.user._id)) {
+                if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {
                     next();
                 } else {
                     req.flash("error", "Du hast nicht die Rechte das zu tun.");
@@ -53,6 +53,14 @@ middlewareObj.isLoggedIn = function(req, res, next){
         return next();
     }
     req.flash("error", "Log dich bitte ein.");
+    res.redirect("/login");
+};
+
+middlewareObj.isAdmin = function(req, res, next){
+    if(req.user.isAdmin) {
+        return next();
+    }
+    req.flash("error", "Das kann nur der Admin tun.");
     res.redirect("/login");
 };
 
