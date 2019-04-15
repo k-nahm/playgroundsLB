@@ -2,6 +2,7 @@ var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var Playground = require("../models/playground");
 
 //root route
 router.get("/", function(req, res){
@@ -16,15 +17,17 @@ router.get("/register", function(req, res){
 //handle sign up logic
 router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username});
-    // if(req.body.adminCode === 'secret') {
-    //   newUser.isAdmin = true;
-    // }
+    var newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+      });
+    
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             return res.render("register", {"error": err.message});
         }
         passport.authenticate("local")(req, res, function(){
-            req.flash("success", "Willkommen " + user.username);
+            req.flash("success", "Willkommen" +req.body.username);
            res.redirect("/playgrounds"); 
         });
     });
@@ -48,6 +51,23 @@ router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "Abgemeldet!");
    res.redirect("/playgrounds");
+});
+
+// USER PROFILE
+router.get("/users/:id", function(req, res) {
+  User.findById(req.params.id, function(err, foundUser) {
+    if(err) {
+      req.flash("error", "Etwas ist schiefgelaufen.");
+      return res.redirect("/");
+    }
+    Playground.find().where('author.id').equals(foundUser._id).exec(function(err, playgrounds) {
+      if(err) {
+        req.flash("error", "Etwas ist schiefgelaufen.");
+        return res.redirect("/");
+      }
+      res.render("users/show", {user: foundUser, playgrounds: playgrounds});
+    })
+  });
 });
 
 
