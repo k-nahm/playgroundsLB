@@ -19,7 +19,8 @@ router.get("/register", function(req, res){
 
 //handle sign up logic
 router.post("/register", function(req, res){
-    var newUser = new User({username: req.body.username});
+   if(req.body.password===req.body.password2) {
+      //  var newUser = new User({username: req.body.username});
     var newUser = new User({
         username: req.body.username,
         email: req.body.email,
@@ -34,6 +35,10 @@ router.post("/register", function(req, res){
            res.redirect("/playgrounds"); 
         });
     });
+   }else {
+      req.flash("error", "Passwörter stimmen nicht überein.");
+      return res.redirect('back');  
+   }
 });
 
 // show login form
@@ -145,7 +150,7 @@ router.post('/reset/:token', function(req, res) {
             });
           });
         } else {
-            req.flash("error", "Passwords do not match.");
+            req.flash("error", "Passwörter stimmen nicht überein.");
             return res.redirect('back');
         }
       });
