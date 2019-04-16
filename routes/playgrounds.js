@@ -32,10 +32,11 @@ router.post("/", middleware.isAdmin, function(req, res){
   var name = req.body.name;
   var image = req.body.image;
   var desc = req.body.description;
+  var district = req.body.district;
   var author = {
       id: req.user._id,
       username: req.user.username
-  }
+  };
   geocoder.geocode(req.body.location, function (err, data) {
     if (err || !data.length) {
       req.flash('error', 'Ungültige Adresse');
@@ -44,7 +45,7 @@ router.post("/", middleware.isAdmin, function(req, res){
     var lat = data[0].latitude;
     var lng = data[0].longitude;
     var location = data[0].formattedAddress;
-    var newPlayground = {name: name, image: image, description: desc, author:author, location: location, lat: lat, lng: lng};
+    var newPlayground = {name: name, image: image, description: desc, district: district, author:author, location: location, lat: lat, lng: lng};
     // Create a new playground and save to DB
     Playground.create(newPlayground, function(err, newlyCreated){
         if(err){

@@ -4,6 +4,7 @@ var playroundSchema = new mongoose.Schema({
    image: String,
    description: String,
    location: String,
+   district: String,
    lat: Number,
    lng: Number,
    author: {
