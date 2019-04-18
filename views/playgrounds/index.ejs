@@ -14,14 +14,12 @@
      <div class="row text-center" style="display:flex; flex-wrap: wrap;">
         <% playgrounds.forEach(function(playground){ %>
             <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                   <img src="<%= playground.image %>">
-                   <div class="caption">
-                       <h4><%= playground.name %></h4>
-                   </div>
-                   <p>
-                       <a href="/playgrounds/<%= playground._id %>" class="btn btn-primary">Mehr Infos</a>
-                   </p>
+                <div class="card">
+                    <img class="card-img-top" src="<%= playground.image %>" alt="<%= playground.name %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= playground.name %></h5>
+                        <a href="/playgrounds/<%= playground._id %>" class="btn btn-primary">Mehr Infos</a>
+                    </div>
                 </div>
             </div>
         <% }); %>

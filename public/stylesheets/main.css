@@ -27,3 +27,13 @@
   margin: 0 auto;
   padding: 0;
 }
+
+/*anmelden*/
+.login-form {
+    width: 30%; 
+    margin: 25px auto;
+}
+
+.login-form h2{
+    text-align: center;
+}
