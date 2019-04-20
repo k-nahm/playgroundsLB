@@ -31,7 +31,7 @@ router.post("/register", function(req, res){
             return res.render("register", {"error": err.message});
         }
         passport.authenticate("local")(req, res, function(){
-            req.flash("success", "Willkommen" +req.body.username);
+            req.flash("success", "Willkommen " +req.body.username);
            res.redirect("/playgrounds"); 
         });
     });

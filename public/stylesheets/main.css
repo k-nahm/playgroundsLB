@@ -37,3 +37,7 @@
 .login-form h2{
     text-align: center;
 }
+
+.checked {
+    color: orange;
+}

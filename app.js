@@ -15,6 +15,7 @@ var express     = require("express"),
     
 //requring routes
 var commentRoutes    = require("./routes/comments"),
+    reviewRoutes     = require("./routes/reviews"),
     playgroundRoutes = require("./routes/playgrounds"),
     indexRoutes      = require("./routes/index");
 
@@ -50,6 +51,7 @@ app.use(function(req, res, next){
 app.use("/", indexRoutes);
 app.use("/playgrounds", playgroundRoutes);
 app.use("/playgrounds/:id/comments", commentRoutes);
+app.use("/playgrounds/:id/reviews", reviewRoutes);
 
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("The Playground Server Has Started!");
