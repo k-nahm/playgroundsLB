@@ -16,14 +16,26 @@ var options = {
 var geocoder = NodeGeocoder(options);
 
 //INDEX - show all playgrounds
-router.get("/", function(req, res){
-    // Get all playgrounds from DB
-    Playground.find({}, function(err, allPlaygrounds){
-       if(err){
-           console.log(err);
-       } else {
-          res.render("playgrounds/index",{playgrounds: allPlaygrounds, page: 'playgrounds'});
-       }
+router.get("/", function (req, res) {
+    var perPage = 8;
+    var pageQuery = parseInt(req.query.page);
+    var pageNumber = pageQuery ? pageQuery : 1;
+    Playground.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allPlaygrounds) {
+        if (err) {
+            console.log(err);
+        } else {
+            Playground.count().exec(function (err, count) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("playgrounds/index", {
+                        playgrounds: allPlaygrounds,
+                        current: pageNumber,
+                        pages: Math.ceil(count / perPage)
+                    });
+                }
+            });
+        }
     });
 });
 
