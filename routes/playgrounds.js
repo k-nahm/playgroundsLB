@@ -24,7 +24,7 @@ router.get("/", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            Playground.count().exec(function (err, count) {
+            Playground.countDocuments().exec(function (err, count) {
                 if (err) {
                     console.log(err);
                 } else {
