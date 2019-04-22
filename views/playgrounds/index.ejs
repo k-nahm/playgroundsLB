@@ -8,6 +8,28 @@
                     <a class="btn btn-primary btn-large" href="/playgrounds/new">Spielplatz hinzufügen</a>
                 </p>
             <% }%>
+            <p>
+            	<form action="/playgrounds" method="GET" class="form-inline">
+            		<div class="form-group">
+            			<select class="form-control" id="exampleFormControlSelect1" name="search">
+                            <option selected>Stadtteil...</option>
+                            <option>Alle</option>
+                            <option>Eglosheim</option>
+                            <option>Grünbühl</option>
+                            <option>Hoheneck</option>
+                            <option>Neckarweihingen</option>
+                            <option>Oßweil</option>
+                            <option>Oststadt</option>
+                            <option>Pflugfelden</option>
+                            <option>Poppenweiler</option>
+                            <option>Schlösslesfeld</option>
+                            <option>Stadtmitte</option>
+                            <option>Weststadt</option>
+                        </select>
+            			<input type="submit" value="Filtern" class="btn btn-default">
+            		</div>
+            	</form>
+            </p>
         </div>
     </header>
      

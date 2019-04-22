@@ -20,23 +20,49 @@ router.get("/", function (req, res) {
     var perPage = 8;
     var pageQuery = parseInt(req.query.page);
     var pageNumber = pageQuery ? pageQuery : 1;
-    Playground.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allPlaygrounds) {
-        if (err) {
-            console.log(err);
-        } else {
-            Playground.countDocuments().exec(function (err, count) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render("playgrounds/index", {
-                        playgrounds: allPlaygrounds,
-                        current: pageNumber,
-                        pages: Math.ceil(count / perPage)
-                    });
-                }
-            });
-        }
-    });
+    var searchDistrict = req.query.search;
+    if (searchDistrict==false || searchDistrict=="Alle" || searchDistrict=="Stadtteil...") {
+        searchDistrict="all";
+    }
+    
+    if(searchDistrict!="all") {
+        Playground.find({district:req.query.search}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allPlaygrounds) {
+            if (err) {
+                console.log(err);
+            } else {
+                Playground.countDocuments().exec(function (err, count) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.render("playgrounds/index", {
+                            playgrounds: allPlaygrounds,
+                            current: pageNumber,
+                            pages: Math.ceil(count / perPage)
+                        });
+                    }
+                });
+            }
+        });
+        
+    }else {
+        Playground.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allPlaygrounds) {
+            if (err) {
+                console.log(err);
+            } else {
+                Playground.countDocuments().exec(function (err, count) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.render("playgrounds/index", {
+                            playgrounds: allPlaygrounds,
+                            current: pageNumber,
+                            pages: Math.ceil(count / perPage)
+                        });
+                    }
+                });
+            }
+        });
+    }
 });
 
 //CREATE - add new playground to DB
