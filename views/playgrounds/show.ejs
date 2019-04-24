@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><%= playground.name %></h5>
                     <hr>
-                    <p class="card-text"><%= playground.description %></p>
+                    <p class="card-text"><%= playground.district %></p>
                     <% if(currentUser && playground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                         <a class="btn btn-warning" href="/playgrounds/<%= playground._id %>/edit">Bearbeiten</a>
                         <form action="/playgrounds/<%= playground._id %>?_method=DELETE" method="POST" class="delete-form">

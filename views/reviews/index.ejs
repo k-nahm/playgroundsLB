@@ -6,7 +6,6 @@
             <div class="col-md-12 text-center">
                 <h2>Bewertung: <%= playground.name %></h2>
             </div>
-            <a href="/playgrounds/<%= playground._id %>">Zurück</a>
             <div class="card">
                 <div class="card-body">
                     <% if (playground.rating === 0) { %>
@@ -55,7 +54,7 @@
                             Schreib eine neue Bewertung</a>
                     </div>
                     <div style="margin-top: 10px;">
-                        <a class="btn btn-default" href="/playgrounds/<%= playground._id %>"><i class="fa fa-arrow-left"></i> Zurück</a>
+                        <a class="btn btn-default" href="/playgrounds/<%= playground._id %>">Zurück</a>
                     </div>
                 </div>
             </div>
