@@ -17,6 +17,12 @@
 			<li><a href="/playgrounds/<%= playground.id %>"><%= playground.name %></a></li>
 		<% }); %>
 		</ul>
+		<ul>
+			<li><a href="/playgrounds/"><%= user %></a></li>
+			<% user.favoritePlaygrounds.forEach(function(playground) { %>
+				<li><a href="/playgrounds/<%= playground %>"><%= playground %></a></li>
+			<% }); %>
+		</ul>
 	</div>
 </div>
 

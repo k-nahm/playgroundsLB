@@ -14,6 +14,20 @@
                 <img class="card-img-top" src="<%= playground.image %>" alt="<%= playground.name %>">
                 <div class="card-body">
                     <h5 class="card-title"><%= playground.name %></h5>
+                    <!--if playground is not liked-->
+                    <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(playground.id)==-1) ){ %>
+                        <form action="/playgrounds/<%= playground._id%>/like"  method="POST" class="delete-form ">
+                            <button class="btn"><i class="far fa-heart"></i></button>
+                        </form>    
+                    <% } %>
+                    <!--if playground is liked-->
+                    <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(playground.id)!=-1) ){ %>
+                        <form action="/playgrounds/<%= playground._id%>/unlike"  method="POST" class="delete-form">
+                            <button class="btn"><i class="fas fa-heart"></i></button>
+                        </form>    
+                    <% } %>
+                    
+                  
                     <hr>
                     <p class="card-text"><%= playground.district %></p>
                     <% if(currentUser && playground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
@@ -47,26 +61,26 @@
                     <p><h4>Aktuellste Bewertungen:</h4></p>
                     <hr style="margin-top: 0;">
                     <% playground.reviews.slice(0, 5).forEach(function(review){ %>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %><%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
-                            <div>Von: <strong><%= review.author.username %></strong></div>
-                            <span><em><%= review.updatedAt.toDateString() %></em></span>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %><%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
+                                <div>Von: <strong><a href="/users/<%= review.author.id %>"><%= review.author.username %></a></strong></div>
+                                <span><em><%= review.updatedAt.toDateString() %></em></span>
+                            </div>
+                            <div class="col-md-9">
+                                <p style="text-align: justify; word-wrap: break-word;">
+                                    <%= review.text %>
+                                </p>
+                                <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+                                <a class="btn btn-warning"
+                                   href="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>/edit">Ändern</a>
+                                <form id="delete-form" class="delete-form" action="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+                                    <input type="submit" class="btn btn-danger" value="Löschen">
+                                </form>
+                                <% } %>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <p style="text-align: justify; word-wrap: break-word;">
-                                <%= review.text %>
-                            </p>
-                            <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
-                            <a class="btn btn-warning"
-                               href="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>/edit">Ändern</a>
-                            <form id="delete-form" class="delete-form" action="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
-                                <input type="submit" class="btn btn-danger" value="Löschen">
-                            </form>
-                            <% } %>
-                        </div>
-                    </div>
-                    <hr>
+                        <hr>
                     <% }); %>
                     <div style="margin-bottom: 10px;">
                         <h5><a href="/playgrounds/<%= playground._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> Alle Bewertungen ansehen</a></h5>
