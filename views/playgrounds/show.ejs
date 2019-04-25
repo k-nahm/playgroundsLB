@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-3">
             <% var descriptionArr = playground.description.split(","); %>
-            <div class="list-group">
+            <div class="list-group list-group-flush">
                 <% for(var i=0; i<descriptionArr.length; i++) {%>
                     <li class="list-group-item"><%= descriptionArr[i] %></li>
                 <% } %>
