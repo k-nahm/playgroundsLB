@@ -17,6 +17,7 @@
                     <!--if playground is not liked-->
                     <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(playground.id)==-1) ){ %>
                         <form action="/playgrounds/<%= playground._id%>/like"  method="POST" class="delete-form ">
+                            <input type="hidden" name="playgroundName" value="<%= playground.name %>">
                             <button class="btn"><i class="far fa-heart"></i></button>
                         </form>    
                     <% } %>
