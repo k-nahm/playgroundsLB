@@ -14,21 +14,21 @@
                 <img class="card-img-top" src="<%= playground.image %>" alt="<%= playground.name %>">
                 <div class="card-body">
                     <h5 class="card-title"><%= playground.name %></h5>
+                    <% var favPgString= playground.id+"§"+playground.name;%>
                     <!--if playground is not liked-->
-                    <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(playground.id)==-1) ){ %>
+                    <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(favPgString)==-1) ){ %>
                         <form action="/playgrounds/<%= playground._id%>/like"  method="POST" class="delete-form ">
-                            <input type="hidden" name="playgroundName" value="<%= playground.name %>">
+                            <input type="hidden" name="playgroundIdName" value="<%= favPgString %>">
                             <button class="btn"><i class="far fa-heart"></i></button>
                         </form>    
                     <% } %>
                     <!--if playground is liked-->
-                    <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(playground.id)!=-1) ){ %>
+                    <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(favPgString)!=-1) ){ %>
                         <form action="/playgrounds/<%= playground._id%>/unlike"  method="POST" class="delete-form">
+                            <input type="hidden" name="playgroundIdName" value="<%= favPgString %>">
                             <button class="btn"><i class="fas fa-heart"></i></button>
                         </form>    
                     <% } %>
-                    
-                  
                     <hr>
                     <p class="card-text"><%= playground.district %></p>
                     <% if(currentUser && playground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>

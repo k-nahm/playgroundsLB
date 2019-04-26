@@ -167,7 +167,8 @@ router.post("/:id/like", function (req, res) {
             console.log(err);
             return res.redirect('back');
         }else {
-            user.favoritePlaygrounds.push(req.params.id);
+            // console.log(req.body.playgroundIdName);
+            user.favoritePlaygrounds.push(req.body.playgroundIdName);
             User.findByIdAndUpdate(req.user._id, user, function(err, playground){
                 if(err){
                     req.flash("error", err.message);
@@ -198,7 +199,7 @@ router.post("/:id/unlike", function (req, res) {
             console.log(err);
             return res.redirect('back');
         }else {
-            var indexDelete=user.favoritePlaygrounds.indexOf(req.params.id);
+            var indexDelete=user.favoritePlaygrounds.indexOf(req.body.playgroundIdName);
             user.favoritePlaygrounds.splice(indexDelete,1);
             User.findByIdAndUpdate(req.user._id, user, function(err, user){
                 if(err){
