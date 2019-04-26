@@ -9,7 +9,10 @@ var crypto = require("crypto");
 
 //root route
 router.get("/", function(req, res){
-    res.render("landing");
+   console.log(req.app.locals.allPlaygrounds);
+   Playground.find({}, function(err, playgrounds) {
+   });
+   res.render("landing");
 });
 
 // show register form

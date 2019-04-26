@@ -11,11 +11,14 @@
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quasi similique architecto ad modi sunt quaerat possimus, officiis quos. Voluptatibus repellendus exercitationem, id saepe sunt consectetur non quam sapiente assumenda.
 	</div>
 	<div class="col-md-8">
-		<h3><%= user.username %>'s campgrounds:</h3>
+		<h3><%= user.username %>'s Lieblingsspielplätze:</h3>
 		<ul>
-		<% playgrounds.forEach(function(playground) { %>
-			<li><a href="/playgrounds/<%= playground.id %>"><%= playground.name %></a></li>
-		<% }); %>
+			<% user.favoritePlaygrounds.forEach(function(playground) { %>
+				<% var arr = playground.split("§"); %>
+				<% var pgId= arr[0];%>
+				<% var pgName= arr[1];%>
+				<li><a href="/playgrounds/<%= pgId %>"><%= pgName %></a></li>
+			<% }); %>
 		</ul>
 	</div>
 </div>

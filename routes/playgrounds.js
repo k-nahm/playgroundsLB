@@ -3,6 +3,7 @@ var router  = express.Router();
 var Playground = require("../models/playground");
 var Comment = require("../models/comment");
 var Review = require("../models/review");
+var User = require("../models/user");
 var middleware = require("../middleware");
 
 //MAPS
@@ -157,6 +158,70 @@ router.delete("/:id", middleware.checkPlaygroundOwnership, function (req, res) {
             });
         }
     });
+});
+
+// Like
+router.post("/:id/like", function (req, res) {
+    User.findOne({ username: req.user.username }, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.redirect('back');
+        }else {
+            // console.log(req.body.playgroundIdName);
+            user.favoritePlaygrounds.push(req.body.playgroundIdName);
+            User.findByIdAndUpdate(req.user._id, user, function(err, playground){
+                if(err){
+                    req.flash("error", err.message);
+                    res.redirect("back");
+                } else {
+                    //find the playground with provided ID
+                    Playground.findById(req.params.id).populate("comments").populate({
+                        path: "reviews",
+                        options: {sort: {createdAt: -1}}
+                    }).exec(function (err, foundPlayground) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            //render show template with that playground
+                            res.redirect("/playgrounds/" + foundPlayground._id);
+                        }
+                    });
+                }
+            });
+        }
+      });
+});
+
+// Unlike
+router.post("/:id/unlike", function (req, res) {
+    User.findOne({ username: req.user.username }, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.redirect('back');
+        }else {
+            var indexDelete=user.favoritePlaygrounds.indexOf(req.body.playgroundIdName);
+            user.favoritePlaygrounds.splice(indexDelete,1);
+            User.findByIdAndUpdate(req.user._id, user, function(err, user){
+                if(err){
+                    req.flash("error", err.message);
+                    res.redirect("back");
+                } else {
+                    //find the playground with provided ID
+                    Playground.findById(req.params.id).populate("comments").populate({
+                        path: "reviews",
+                        options: {sort: {createdAt: -1}}
+                    }).exec(function (err, foundPlayground) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            //render show template with that playground
+                            res.redirect("/playgrounds/" + foundPlayground._id);
+                        }
+                    });
+                }
+            });
+        }
+      });
 });
 
 module.exports = router;
