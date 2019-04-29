@@ -9,13 +9,10 @@ var express     = require("express"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
     Playground  = require("./models/playground"),
-    Comment     = require("./models/comment"),
-    User        = require("./models/user"),
-    seedDB      = require("./seeds");
+    User        = require("./models/user");
     
 //requring routes
-var commentRoutes    = require("./routes/comments"),
-    reviewRoutes     = require("./routes/reviews"),
+var reviewRoutes     = require("./routes/reviews"),
     playgroundRoutes = require("./routes/playgrounds"),
     indexRoutes      = require("./routes/index");
 
@@ -50,7 +47,6 @@ app.use(function(req, res, next){
 
 app.use("/", indexRoutes);
 app.use("/playgrounds", playgroundRoutes);
-app.use("/playgrounds/:id/comments", commentRoutes);
 app.use("/playgrounds/:id/reviews", reviewRoutes);
 
 app.listen(process.env.PORT, process.env.IP, function(){

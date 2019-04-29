@@ -1,7 +1,6 @@
 var express = require("express");
 var router  = express.Router();
 var Playground = require("../models/playground");
-var Comment = require("../models/comment");
 var Review = require("../models/review");
 var User = require("../models/user");
 var middleware = require("../middleware");
@@ -84,7 +83,7 @@ router.get("/new", middleware.isAdmin, function(req, res){
 // SHOW - shows more info about one playground
 router.get("/:id", function (req, res) {
     //find the playground with provided ID
-    Playground.findById(req.params.id).populate("comments").populate({
+    Playground.findById(req.params.id).populate({
         path: "reviews",
         options: {sort: {createdAt: -1}}
     }).exec(function (err, foundPlayground) {
@@ -138,23 +137,16 @@ router.delete("/:id", middleware.checkPlaygroundOwnership, function (req, res) {
         if (err) {
             res.redirect("/playgrounds");
         } else {
-            // deletes all comments associated with the playground
-            Comment.remove({"_id": {$in: playground.comments}}, function (err) {
+            // deletes all reviews associated with the playground
+            Review.remove({"_id": {$in: playground.reviews}}, function (err) {
                 if (err) {
                     console.log(err);
                     return res.redirect("/playgrounds");
                 }
-                // deletes all reviews associated with the playground
-                Review.remove({"_id": {$in: playground.reviews}}, function (err) {
-                    if (err) {
-                        console.log(err);
-                        return res.redirect("/playgrounds");
-                    }
-                    //  delete the playground
-                    playground.remove();
-                    req.flash("success", "Spielplatz gelöscht.");
-                    res.redirect("/playgrounds");
-                });
+                //  delete the playground
+                playground.remove();
+                req.flash("success", "Spielplatz gelöscht.");
+                res.redirect("/playgrounds");
             });
         }
     });
@@ -175,7 +167,7 @@ router.post("/:id/like", function (req, res) {
                     res.redirect("back");
                 } else {
                     //find the playground with provided ID
-                    Playground.findById(req.params.id).populate("comments").populate({
+                    Playground.findById(req.params.id).populate({
                         path: "reviews",
                         options: {sort: {createdAt: -1}}
                     }).exec(function (err, foundPlayground) {
@@ -207,7 +199,7 @@ router.post("/:id/unlike", function (req, res) {
                     res.redirect("back");
                 } else {
                     //find the playground with provided ID
-                    Playground.findById(req.params.id).populate("comments").populate({
+                    Playground.findById(req.params.id).populate({
                         path: "reviews",
                         options: {sort: {createdAt: -1}}
                     }).exec(function (err, foundPlayground) {
