@@ -14,7 +14,7 @@
                 <img class="card-img-top" src="<%= playground.image %>" alt="<%= playground.name %>">
                 <div class="card-body">
                     <h5 class="card-title"><%= playground.name %></h5>
-                    <% var favPgString= playground.id+"§"+playground.name;%>
+                    <% var favPgString= playground.id+"§"+playground.name+"§"+playground.lat+"§"+playground.lng;%>
                     <!--if playground is not liked-->
                     <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(favPgString)==-1) ){ %>
                         <form action="/playgrounds/<%= playground._id%>/like"  method="POST" class="delete-form ">
@@ -72,7 +72,7 @@
                                 <p style="text-align: justify; word-wrap: break-word;">
                                     <%= review.text %>
                                 </p>
-                                <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+                                <% if(currentUser && review.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                                 <a class="btn btn-warning"
                                    href="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>/edit">Ändern</a>
                                 <form id="delete-form" class="delete-form" action="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
@@ -118,9 +118,11 @@
             position: center,
             map: map
         });
+        
         marker.addListener('click', function() {
-          infowindow.open(map, marker);
+            infowindow.open(map, marker);
         });
+        
       }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEB4zpOjQmMl2YTPJydHGhfUZbCGwDJ8o&callback=initMap"></script>
