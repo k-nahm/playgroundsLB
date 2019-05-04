@@ -41,3 +41,9 @@
 .checked {
     color: orange;
 }
+
+.jumbotron {
+    padding-bottom: 5px;
+    padding-top: 20px;
+    background:#FECC00 !important
+}

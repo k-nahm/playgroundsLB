@@ -2,8 +2,8 @@
     
     <header class="jumbotron">
         <div class="container">
-            <h1>Welcome To Playground App!</h1>
-            <p>View our playgrounds from LB</p>
+            <h2>Willkommen bei Spielplätze LB</h2>
+            <p>Schau dir die Spielplätze an, like deine Favoriten und schreibe Bewertungen, damit andere Mamas & Papas es leichter haben einen tollen Spielplatz zu finden!</p>
             <% if(currentUser && currentUser.isAdmin){ %>
                 <p>
                     <a class="btn btn-primary btn-large" href="/playgrounds/new">Spielplatz hinzufügen</a>
@@ -11,8 +11,8 @@
             <% }%>
             <p>
             	<form action="/playgrounds" method="GET" class="form-inline">
-            		<div class="form-group">
-            			<select class="form-control" id="exampleFormControlSelect1" name="search">
+            		<div class="form-group ">
+            			<select class="form-control mr-2" id="exampleFormControlSelect1" name="search">
                             <option selected>Stadtteil...</option>
                             <option>Alle</option>
                             <option>Eglosheim</option>

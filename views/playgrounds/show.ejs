@@ -1,5 +1,5 @@
 <% include ../partials/header %>
-    <% var descriptionArr = playground.description.split(","); %>
+    <% var descriptionArr = playground.description.trim().split(",").sort(); %>
     <% var imageArr = playground.image.trim().split(","); %>
     <div class="row">
         <div class="col-md-3">
@@ -95,7 +95,7 @@
                         <p>
                             Aktuelle Bewertung: <strong><%= playground.rating.toFixed(2) %></strong>
                         </p>
-                        <p><h4>Aktuellste Bewertungen:</h4></p>
+                        
                         <hr style="margin-top: 0;">
                         <% playground.reviews.forEach(function(review){ %>
                             <div class="row">
