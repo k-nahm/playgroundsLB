@@ -72,53 +72,54 @@
             <div class="card">
                 <div class="card-body">
                     <% if (playground.rating === 0) { %>
-                    <h5>
-                        <em>Keine Bewertungen bis jetzt.</em>
-                    </h5>
-                    <% } else { %>
-                    <p>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star <% if (playground.rating > 1.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (playground.rating > 2.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (playground.rating > 3.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (playground.rating > 4.5) { %> checked <% } %>"></span>
-                        <em>(Anzahl Bewertungen: <%= playground.reviews.length %>)</em>
-                    </p>
-                    <p>
-                        Aktuelle Bewertung: <strong><%= playground.rating.toFixed(2) %></strong>
-                    </p>
-                    <p><h4>Aktuellste Bewertungen:</h4></p>
-                    <hr style="margin-top: 0;">
-                    <% playground.reviews.slice(0, 5).forEach(function(review){ %>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %><%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
-                                <div>Von: <strong><a href="/users/<%= review.author.id %>"><%= review.author.username %></a></strong></div>
-                                <span><em><%= review.updatedAt.toDateString() %></em></span>
-                            </div>
-                            <div class="col-md-9">
-                                <p style="text-align: justify; word-wrap: break-word;">
-                                    <%= review.text %>
-                                </p>
-                                <% if(currentUser && review.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-                                <a class="btn btn-warning"
-                                   href="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>/edit">Ändern</a>
-                                <form id="delete-form" class="delete-form" action="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
-                                    <input type="submit" class="btn btn-danger" value="Löschen">
-                                </form>
-                                <% } %>
-                            </div>
-                        </div>
-                        <hr>
-                    <% }); %>
-                    <div style="margin-bottom: 10px;">
-                        <h5><a href="/playgrounds/<%= playground._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> Alle Bewertungen ansehen</a></h5>
-                    </div>
-                    <% } %>
-                    <div>
-                        <a class="btn btn-primary  <% if (currentUser && playground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/playgrounds/<%= playground._id %>/reviews/new">
+                        <h5 style="display: inline">
+                            <em>Keine Bewertungen bis jetzt.</em>
+                        </h5>
+                        <p class="float-right">
+                            <a class="btn btn-primary  <% if (currentUser && playground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/playgrounds/<%= playground._id %>/reviews/new">
                             Schreib eine Bewertung</a>
-                    </div>
+                        </p>
+                    <% } else { %>
+                        <p style="display:inline">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star <% if (playground.rating > 1.5) { %> checked <% } %>"></span>
+                            <span class="fa fa-star <% if (playground.rating > 2.5) { %> checked <% } %>"></span>
+                            <span class="fa fa-star <% if (playground.rating > 3.5) { %> checked <% } %>"></span>
+                            <span class="fa fa-star <% if (playground.rating > 4.5) { %> checked <% } %>"></span>
+                            <em>(Anzahl Bewertungen: <%= playground.reviews.length %>)</em>
+                        </p>
+                        <p class="float-right">
+                            <a class="btn btn-primary  <% if (currentUser && playground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/playgrounds/<%= playground._id %>/reviews/new">
+                                Schreib eine Bewertung</a>
+                        </p>
+                        <p>
+                            Aktuelle Bewertung: <strong><%= playground.rating.toFixed(2) %></strong>
+                        </p>
+                        <p><h4>Aktuellste Bewertungen:</h4></p>
+                        <hr style="margin-top: 0;">
+                        <% playground.reviews.forEach(function(review){ %>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %><%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
+                                    <div>Von: <strong><a href="/users/<%= review.author.id %>"><%= review.author.username %></a></strong></div>
+                                    <span><em><%= review.updatedAt.toDateString() %></em></span>
+                                </div>
+                                <div class="col-md-9">
+                                    <p style="text-align: justify; word-wrap: break-word;">
+                                        <%= review.text %>
+                                    </p>
+                                    <% if(currentUser && review.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                        <a class="btn btn-warning"
+                                           href="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>/edit">Ändern</a>
+                                        <form id="delete-form" class="delete-form" action="/playgrounds/<%=playground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+                                            <input type="submit" class="btn btn-danger" value="Löschen">
+                                        </form>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <hr>
+                        <% }); %>
+                    <% } %>
                 </div>
             </div>
         </div>

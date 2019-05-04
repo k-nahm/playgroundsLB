@@ -39,7 +39,9 @@
                 <% var imageArr = playground.image.trim().split(","); %>
                 <div class="col-md-3 col-sm-6 ">
                     <div class="card mb-3">
-                        <img class="card-img-top" src="<%= imageArr[0] %>" alt="<%= playground.name %>">
+                        <a href="/playgrounds/<%= playground._id %>">
+                            <img class="card-img-top" src="<%= imageArr[0] %>" alt="<%= playground.name %>">
+                        </a>
                         <div class="card-body">
                             <h5 class="card-title"><%= playground.name %></h5>
                             <h6 class="card-title"><%= playground.district %></h6>
