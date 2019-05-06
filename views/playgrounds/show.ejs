@@ -2,14 +2,6 @@
     <% var descriptionArr = playground.description.trim().split(",").sort(); %>
     <% var imageArr = playground.image.trim().split(","); %>
     <div class="row">
-        <div class="col-md-3">
-            <div class="list-group list-group-flush">
-                <% for(var i=0; i<descriptionArr.length; i++) {%>
-                    <li class="list-group-item"><%= descriptionArr[i] %></li>
-                <% } %>
-            </div>
-            <div id="map"></div>
-        </div>
         <div class="col-md-9">
             <!--carousel-->
             <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
@@ -47,14 +39,14 @@
                     <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(favPgString)==-1) ){ %>
                         <form action="/playgrounds/<%= playground._id%>/like"  method="POST" class="delete-form ">
                             <input type="hidden" name="playgroundIdName" value="<%= favPgString %>">
-                            <button class="btn"><i class="far fa-heart"></i></button>
+                            <button class="btn btn-outline-warning"><i class="far fa-heart"></i></button>
                         </form>    
                     <% } %>
                     <!--if playground is liked-->
                     <% if(currentUser && (currentUser.favoritePlaygrounds.indexOf(favPgString)!=-1) ){ %>
                         <form action="/playgrounds/<%= playground._id%>/unlike"  method="POST" class="delete-form">
                             <input type="hidden" name="playgroundIdName" value="<%= favPgString %>">
-                            <button class="btn"><i class="fas fa-heart"></i></button>
+                            <button class="btn btn-outline-warning"><i class="fas fa-heart"></i></button>
                         </form>    
                     <% } %>
                     <hr>
@@ -67,7 +59,20 @@
                     <% } %>
                 </div>
             </div>
-            
+        </div>
+        
+        <div class="col-md-3">
+            <div class="list-group list-group-flush">
+                <% for(var i=0; i<descriptionArr.length; i++) {%>
+                    <li class="list-group-item"><%= descriptionArr[i] %></li>
+                <% } %>
+            </div>
+            <div id="map" class="my-3"></div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
             <!--Review section-->
             <div class="card">
                 <div class="card-body">
@@ -76,7 +81,7 @@
                             <em>Keine Bewertungen bis jetzt.</em>
                         </h5>
                         <p class="float-right">
-                            <a class="btn btn-primary  <% if (currentUser && playground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/playgrounds/<%= playground._id %>/reviews/new">
+                            <a class="btn btn-outline-warning <% if (currentUser && playground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/playgrounds/<%= playground._id %>/reviews/new">
                             Schreib eine Bewertung</a>
                         </p>
                     <% } else { %>
@@ -89,7 +94,7 @@
                             <em>(Anzahl Bewertungen: <%= playground.reviews.length %>)</em>
                         </p>
                         <p class="float-right">
-                            <a class="btn btn-primary  <% if (currentUser && playground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/playgrounds/<%= playground._id %>/reviews/new">
+                            <a class="btn btn-outline-warning <% if (currentUser && playground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>"  href="/playgrounds/<%= playground._id %>/reviews/new">
                                 Schreib eine Bewertung</a>
                         </p>
                         <p>
@@ -121,7 +126,7 @@
                         <% }); %>
                     <% } %>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
     

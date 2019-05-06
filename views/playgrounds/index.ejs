@@ -11,8 +11,8 @@
             <% }%>
             <p>
             	<form action="/playgrounds" method="GET" class="form-inline">
-            		<div class="form-group ">
-            			<select class="form-control mr-2" id="exampleFormControlSelect1" name="search">
+            		<div class="input-group ">
+            			<select class="form-control mr-2" id="exampleFormControlSelect1" name="search" >
                             <option selected>Stadtteil...</option>
                             <option>Alle</option>
                             <option>Eglosheim</option>
@@ -27,7 +27,9 @@
                             <option>Stadtmitte</option>
                             <option>Weststadt</option>
                         </select>
-            			<input type="submit" value="Filtern" class="btn btn-default">
+            			<div class="input-group-btn">
+                            <button type="submit" class="btn btn-default">Filtern</button> 
+                        </div>
             		</div>
             	</form>
             </p>
@@ -54,7 +56,8 @@
                                 <span class="fa fa-star <% if (playground.rating > 3.5) { %> checked <% } %>"></span>
                                 <span class="fa fa-star <% if (playground.rating > 4.5) { %> checked <% } %>"></span>
                             <% } %>
-                            <a href="/playgrounds/<%= playground._id %>" class="btn btn-primary btn-sm">Mehr Infos</a>
+                            <br>
+                            <a href="/playgrounds/<%= playground._id %>" class="btn btn-outline-warning btn-sm mt-2">Mehr Infos</a>
                         </div>
                     </div>
                 </div>
