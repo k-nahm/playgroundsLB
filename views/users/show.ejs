@@ -6,7 +6,7 @@
 		<div id="map"></div>
 	</div>
 	<div class="col-md-6">
-		<h3><%= user.username %>'s Lieblingsspielplätze:</h3>
+		<h3>Lieblingsspielplätze:</h3>
 		<ul>
 			<% user.favoritePlaygrounds.forEach(function(playground) { %>
 				<% var arr = playground.split("§"); %>
@@ -21,47 +21,44 @@
 
 <script>
     function initMap() {
-    	var i = 0;
-    	var lat = <%= locations[0][2] %>;
-        var lng = <%= locations[0][3] %>;
-        var center = {lat: lat, lng: lng };
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: center,
-            scrollwheel: true
-        });
-        
-        <% locations.forEach(function(loc) { %>
-			var contentString;
-        	var infowindow = new google.maps.InfoWindow({
-	        	content: contentString
-	        });
-	        var marker = new google.maps.Marker({
-	            position: {lat: <%= loc[2] %>, lng: <%= loc[3] %> },
-	            map: map
+    		var i = 0;
+	    	var lat = 48.8940624;
+	        var lng = 9.195464;
+	        var center = {lat: lat, lng: lng };
+	        var map = new google.maps.Map(document.getElementById('map'), {
+	            zoom: 12,
+	            center: center,
+	            scrollwheel: true
 	        });
 	        
-	        google.maps.event.addListener(marker, 'click', (function(marker, i) {
-	            return function() {
-	            contentString = `
-	        	<strong><%= loc[1] %></strong><br>
-	        	<a href="https://www.google.com/maps/search/?api=1&query=<%= loc[2] %>,<%= loc[3] %>" target="_blank"><span>In Google Maps ansehen</span></a>
+	        if(<%=locations.length%> >0){
+	        	<% locations.forEach(function(loc) { %>
+					var contentString;
+		        	var infowindow = new google.maps.InfoWindow({
+			        	content: contentString
+			        });
+			        var marker = new google.maps.Marker({
+			            position: {lat: <%= loc[2] %>, lng: <%= loc[3] %> },
+			            map: map
+			        });
+			        
+			        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+			            return function() {
+			            contentString = `
+			        	<strong><%= loc[1] %></strong><br>
+			        	<a href="https://www.google.com/maps/search/?api=1&query=<%= loc[2] %>,<%= loc[3] %>" target="_blank"><span>In Google Maps ansehen</span></a>
+			        
+			        	`
+			                infowindow.setContent(contentString);
+			                infowindow.open(map, marker);
+			                
+			            }
+			            console.log(i);
+			            i++;
+			        })(marker, i));
+				<% }); %>	
+	        }
 	        
-	        	`
-	                infowindow.setContent(contentString);
-	                infowindow.open(map, marker);
-	                
-	            }
-	            console.log(i);
-	            i++;
-	        })(marker, i));
-	 
-
-		<% }); %>
-        
-       
-        
-        
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEB4zpOjQmMl2YTPJydHGhfUZbCGwDJ8o&callback=initMap"></script>
