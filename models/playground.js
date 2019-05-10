@@ -1,19 +1,19 @@
 var mongoose = require("mongoose");
 var playroundSchema = new mongoose.Schema({
-   name: String,
-   image: String,
-   description: String,
-   location: String,
-   district: String,
-   lat: Number,
-   lng: Number,
-   author: {
-      id: {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "User"
-      },
-      username: String
-   },
+    name: String,
+    image: String,
+    description: String,
+    location: String,
+    district: String,
+    lat: Number,
+    lng: Number,
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
+    },
     reviews: [
         {
             type: mongoose.Schema.Types.ObjectId,

@@ -21,17 +21,17 @@
 
 <script>
     function initMap() {
-    		var i = 0;
-	    	var lat = 48.8940624;
-	        var lng = 9.195464;
-	        var center = {lat: lat, lng: lng };
-	        var map = new google.maps.Map(document.getElementById('map'), {
-	            zoom: 12,
-	            center: center,
-	            scrollwheel: true
-	        });
-	        
-	        if(<%=locations.length%> >0){
+    	var i = 0;
+	    var lat = 48.8940624;
+	    var lng = 9.195464;
+	    var center = {lat: lat, lng: lng };
+	    var map = new google.maps.Map(document.getElementById('map'), {
+	    	zoom: 12,
+	        center: center,
+	        scrollwheel: true
+	    	
+	    });
+	    	if(<%=locations.length%> >0){
 	        	<% locations.forEach(function(loc) { %>
 					var contentString;
 		        	var infowindow = new google.maps.InfoWindow({
