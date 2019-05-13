@@ -54,11 +54,19 @@
     .jumbotron {
         background-image: url(../images/jt-grossesL-transparent5.png);
     }
+    .login-form {
+        width: 90%; 
+        margin: 25px auto;
+    }
 }
 
 @media only screen and (min-width: 768px) {
     .jumbotron {
         background-image: url(../images/jt-grossesL-transparent4.png);
+    }
+    .login-form {
+        width: 60%; 
+        margin: 25px auto;
     }
 }
 
