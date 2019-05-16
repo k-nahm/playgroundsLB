@@ -1,5 +1,30 @@
 <% include ../partials/header %> 
     
+    <% var pgEH=[] %>
+    <% var pgGB=[] %>
+    <% var pgHE=[] %>
+    <% var pgNW=[] %>
+    <% var pgOW=[] %>
+    <% var pgOS=[] %>
+    <% var pgPF=[] %>
+    <% var pgSF=[] %>
+    <% var pgSM=[] %>
+    <% var pgWS=[] %>
+
+    <% playgrounds.forEach(function(playground){ %>
+        <% if(playground.district=="Eglosheim") {pgEH.push(playground)} %>
+        <% if(playground.district=="Grünbühl") {pgGB.push(playground)} %>
+        <% if(playground.district=="Hoheneck") {pgHE.push(playground)} %>
+        <% if(playground.district=="Neckarweihingen") {pgNW.push(playground)} %>
+        <% if(playground.district=="Ossweil") {pgOW.push(playground)} %>
+        <% if(playground.district=="Oststadt") {pgOS.push(playground)} %>
+        <% if(playground.district=="Pflugfelden") {pgPF.push(playground)} %>
+        <% if(playground.district=="Schlösslesfeld") {pgSF.push(playground)} %>
+        <% if(playground.district=="Stadtmitte") {pgSM.push(playground)} %>
+        <% if(playground.district=="Weststadt") {pgWS.push(playground)} %>
+        <% playgrounds=pgEH.concat(pgGB, pgHE, pgNW, pgOW, pgOS, pgPF, pgSF, pgSM, pgWS); %>
+    <% }); %>
+    
     <header class="jumbotron">
         <div class="container">
             <h2>Willkommen bei Kinderfreundliches Ludwigsburg</h2>
